@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaksi Eksoterm dan Endoterm - Media Pembelajaran Interaktif</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent1: #f72585;
+            --accent2: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --senku-green: #2ecc71;
+            --senku-hair: #f1c40f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .scene {
+            display: none;
+            min-height: 100vh;
+            padding: 2rem;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+        
+        .active {
+            display: flex;
+        }
+        
+        h1, h2, h3 {
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            color: var(--accent2);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #4cc9f0, #f72585);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            color: var(--accent2);
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            color: var(--light);
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent1), #b5179e);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #27ae60);
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 1.5rem;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 900px;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .menu-item {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent2), var(--accent1));
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .menu-icon {
+            font-size: 3rem;
+            color: var(--accent2);
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--accent2);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent2);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+        }
+        
+        .simulation-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .chemical-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .chemical {
+            padding: 1.5rem;
+            border-radius: 15px;
+            background: rgba(67, 97, 238, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 150px;
+        }
+        
+        .chemical:hover {
+            background: rgba(67, 97, 238, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .chemical.active {
+            background: rgba(76, 201, 240, 0.5);
+            box-shadow: 0 0 20px rgba(76, 201, 240, 0.5);
+        }
+        
+        .beaker {
+            width: 220px;
+            height: 320px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 0 0 25px 25px;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 0%;
+            transition: height 2s ease, background 1s ease;
+            border-radius: 0 0 22px 22px;
+        }
+        
+        .thermometer {
+            width: 40px;
+            height: 280px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .mercury {
+            position: absolute;
+            bottom: 10px;
+            left: 5px;
+            width: 30px;
+            height: 0%;
+            background: linear-gradient(to top, #e74c3c, #f39c12, #f1c40f);
+            border-radius: 15px;
+            transition: height 2s ease;
+        }
+        
+        .temp-markers {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .temp-marker {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .temp-label {
+            position: absolute;
+            right: -30px;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .observation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .observation-table th, .observation-table td {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .observation-table th {
+            background: rgba(67, 97, 238, 0.4);
+            font-weight: bold;
+        }
+        
+        .hypothesis-form {
+            text-align: left;
+            margin: 1.5rem 0;
+        }
+        
+        .hypothesis-option {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            border-left: 5px solid var(--accent2);
+        }
+        
+        .conclusion-card {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid rgba(46, 204, 113, 0.4);
+            border-left: 5px solid var(--success);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent2), var(--accent1));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--accent1);
+            color: white;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 1rem;
+        }
+        
+        .quiz-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent2);
+        }
+        
+        .quiz-card.selected {
+            border-color: var(--success);
+            background: rgba(46, 204, 113, 0.2);
+        }
+        
+        .quiz-card.wrong {
+            border-color: var(--danger);
+            background: rgba(231, 76, 60, 0.2);
+        }
+        
+        .completion-animation {
+            font-size: 5rem;
+            color: var(--success);
+            margin: 2rem 0;
+            animation: bounce 1s infinite alternate;
+        }
+        
+        .floating-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            filter: blur(40px);
+            z-index: -1;
+        }
+        
+        .energy-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem 0;
+            gap: 1rem;
+        }
+        
+        .system, .environment {
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 150px;
+        }
+        
+        .system {
+            background: rgba(247, 37, 133, 0.3);
+            border: 2px solid var(--accent1);
+        }
+        
+        .environment {
+            background: rgba(76, 201, 240, 0.3);
+            border: 2px solid var(--accent2);
+        }
+        
+        .arrow {
+            font-size: 2rem;
+            color: var(--accent2);
+        }
+        
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle.exo {
+            background: rgba(247, 37, 133, 0.7);
+        }
+        
+        .particle.endo {
+            background: rgba(76, 201, 240, 0.7);
+        }
+        
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .example-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .example-card.exo {
+            border-left: 5px solid var(--accent1);
+        }
+        
+        .example-card.endo {
+            border-left: 5px solid var(--accent2);
+        }
+        
+        /* Karakter Senku */
+        .senku-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .senku-chat {
+            background: rgba(46, 204, 113, 0.9);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            max-width: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        .senku-chat::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid rgba(46, 204, 113, 0.9);
+        }
+        
+        .senku-character {
+            width: 120px;
+            height: 150px;
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            border-radius: 60px 60px 10px 10px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .senku-character:hover {
+            transform: scale(1.05);
+        }
+        
+        .senku-hair {
+            width: 100px;
+            height: 40px;
+            background: var(--senku-hair);
+            border-radius: 50px 50px 0 0;
+            position: relative;
+            margin-bottom: 5px;
+        }
+        
+        .senku-hair::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 20px;
+            width: 60px;
+            height: 20px;
+            background: var(--senku-hair);
+            border-radius: 30px 30px 0 0;
+        }
+        
+        .senku-face {
+            width: 80px;
+            height: 70px;
+            background: #f9e3b7;
+            border-radius: 40px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .senku-eyes {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .senku-eye {
+            width: 12px;
+            height: 8px;
+            background: #2c3e50;
+            border-radius: 6px;
+            position: relative;
+        }
+        
+        .senku-eye::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            width: 8px;
+            height: 4px;
+            background: white;
+            border-radius: 4px;
+        }
+        
+        .senku-mouth {
+            width: 30px;
+            height: 5px;
+            background: #2c3e50;
+            border-radius: 2px;
+            margin-top: 15px;
+        }
+        
+        .senku-labcoat {
+            width: 100px;
+            height: 60px;
+            background: white;
+            border-radius: 10px 10px 0 0;
+            position: absolute;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+        .senku-neck {
+            width: 30px;
+            height: 15px;
+            background: #f9e3b7;
+            position: absolute;
+            bottom: 60px;
+            z-index: 2;
+        }
+        
+        .science-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            color: var(--senku-green);
+            animation: spin 4s linear infinite;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        
+        .floating-shape {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            animation: floatShape 20s infinite linear;
+            z-index: -1;
+        }
+        
+        @keyframes floatShape {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.5rem; }
+            
+            .simulation-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .energy-flow {
+                flex-direction: column;
+            }
+            
+            .senku-container {
+                bottom: 10px;
+                right: 10px;
+            }
+            
+            .senku-character {
+                width: 80px;
+                height: 100px;
+            }
+            
+            .senku-chat {
+                max-width: 200px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles-container" id="particles"></div>
+    
+    <!-- Floating Shapes -->
+    <div class="floating-shape" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="floating-shape" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="floating-shape" style="left: 30%; animation-delay: 4s;"></div>
+    <div class="floating-shape" style="left: 70%; animation-delay: 6s;"></div>
+    <div class="floating-shape" style="left: 80%; animation-delay: 8s;"></div>
+    <div class="floating-shape" style="left: 90%; animation-delay: 10s;"></div>
+    
+    <!-- Karakter Senku -->
+    <div class="senku-container">
+        <div class="senku-chat" id="senku-chat">
+            Halo! Aku Senku. Mari kita eksplorasi dunia sains yang menarik ini!
+        </div>
+        <div class="senku-character" onclick="toggleSenkuChat()">
+            <div class="senku-hair"></div>
+            <div class="senku-face">
+                <div class="senku-eyes">
+                    <div class="senku-eye"></div>
+                    <div class="senku-eye"></div>
+                </div>
+                <div class="senku-mouth"></div>
+            </div>
+            <div class="senku-neck"></div>
+            <div class="senku-labcoat"></div>
+            <i class="fas fa-atom science-icon"></i>
+        </div>
+    </div>
+    
+    <!-- Scene 1: Judul dan Pembuka -->
+    <div id="scene1" class="scene active">
+        <div class="card">
+            <h1>REAKSI EKSOTERM DAN ENDOTERM</h1>
+            <p>Jelajahi dunia reaksi kimia yang melepas dan menyerap energi dalam petualangan sains interaktif!</p>
+            <div style="display: flex; justify-content: center; gap: 1rem; margin: 2rem 0;">
+                <div style="text-align: center;">
+                    <i class="fas fa-fire fa-3x" style="color: #f72585;"></i>
+                    <p>Eksoterm</p>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fas fa-snowflake fa-3x" style="color: #4cc9f0;"></i>
+                    <p>Endoterm</p>
+                </div>
+            </div>
+            <button class="btn pulse" onclick="showScene(3)">
+                <i class="fas fa-play"></i> Mulai Pembelajaran
+            </button>
+        </div>
+    </div>
+    
+    <!-- Scene 3: Menu -->
+    <div id="scene3" class="scene">
+        <div class="card">
+            <h2>Fase Pembelajaran Inquiry</h2>
+            <p>Pilih fase pembelajaran yang ingin Anda jelajahi. Ikuti langkah berurutan untuk pengalaman inquiry yang lengkap.</p>
+
+            <ol style="text-align:left; margin:1rem 0 1.5rem 1.25rem;">
+                <li><strong>Orientasi</strong> — Amati fenomena dan contoh nyata (Scene 4).</li>
+                <li><strong>Perumusan Masalah</strong> — Rumuskan pertanyaan penelitian yang jelas (Scene 5).</li>
+                <li><strong>Penyusunan Hipotesis</strong> — Buat hipotesis yang bisa diuji (Scene 6).</li>
+                <li><strong>Pengumpulan Data</strong> — Lakukan eksperimen virtual dan catat data (Scene 7).</li>
+                <li><strong>Analisis Data</strong> — Olah hasil dan bandingkan dengan hipotesis (Scene 8).</li>
+                <li><strong>Penarikan Kesimpulan</strong> — Tarik kesimpulan berdasarkan bukti (Scene 9).</li>
+                <li><strong>Kuis</strong> — Uji pemahaman Anda (Scene 10).</li>
+            </ol>
+
+            <div class="menu-grid">
+                <div class="menu-item" onclick="showScene(4)">
+                    <div class="menu-icon"><i class="fas fa-binoculars"></i></div>
+                    <h3>1. Orientasi</h3>
+                    <p>Pelajari definisi singkat, contoh sehari-hari, dan coba simulasi singkat untuk melihat aliran energi.</p>
+                </div>
+                <div class="menu-item" onclick="showScene(5)">
+                    <div class="menu-icon"><i class="fas fa-question-circle"></i></div>
+                    <h3>2. Perumusan Masalah</h3>
+                    <p>Belajar merumuskan pertanyaan penelitian yang dapat diuji dengan eksperimen sederhana.</p>
+                </div>
+                <div class="menu-item" onclick="showScene(6)">
+                    <div class="menu-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>3. Penyusunan Hipotesis</h3>
+                    <p>Panduan membuat hipotesis yang jelas (variabel bebas, terikat, dan prediksi).</p>
+                </div>
+                <div class="menu-item" onclick="showScene(7)">
+                    <div class="menu-icon"><i class="fas fa-flask"></i></div>
+                    <h3>4. Pengumpulan Data</h3>
+                    <p>Eksperimen virtual, catat data (tabel), dan ekspor hasil.</p>
+                </div>
+                <div class="menu-item" onclick="showScene(8)">
+                    <div class="menu-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h3>5. Analisis Data</h3>
+                    <p>Petunjuk analisis sederhana dan interpretasi hasil eksperimen.</p>
+                </div>
+                <div class="menu-item" onclick="showScene(9)">
+                    <div class="menu-icon"><i class="fas fa-trophy"></i></div>
+                    <h3>6. Penarikan Kesimpulan</h3>
+                    <p>Cara menyusun kesimpulan yang berbasis data.</p>
+                </div>
+                <div class="menu-item" onclick="showScene(10)">
+                    <div class="menu-icon"><i class="fas fa-question-circle"></i></div>
+                    <h3>7. Kuis</h3>
+                    <p>Tes singkat untuk mengukur pemahaman konsep.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scene 4: Orientasi -->
+    <div id="scene4" class="scene">
+        <div class="card">
+            <h2>Orientasi: Fenomena Eksoterm dan Endoterm</h2>
+            
+            <div class="simulation-container">
+                <div class="card">
+                    <h3><i class="fas fa-fire" style="color: #f72585;"></i> Hand Warmer (Eksoterm)</h3>
+                    <div class="beaker">
+                        <div class="liquid" id="handwarmer-liquid" style="height: 0%; background: #f72585;"></div>
+                    </div>
+                    <p>Reaksi yang <strong>MELEPAS</strong> kalor ke lingkungan</p>
+                    <button class="btn" onclick="aktifkanHandWarmer()">
+                        <i class="fas fa-burn"></i> Aktifkan
+                    </button>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fas fa-snowflake" style="color: #4cc9f0;"></i> Cold Pack (Endoterm)</h3>
+                    <div class="beaker">
+                        <div class="liquid" id="coldpack-liquid" style="height: 0%; background: #4cc9f0;"></div>
+                    </div>
+                    <p>Reaksi yang <strong>MENYERAP</strong> kalor dari lingkungan</p>
+                    <button class="btn" onclick="aktifkanColdPack()">
+                        <i class="fas fa-temperature-low"></i> Aktifkan
+                    </button>
+                </div>
+            </div>
+            
+            <div style="display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center; align-items:flex-start;">
+                <div class="card" style="max-width:420px;">
+                    <h3>Aliran Energi</h3>
+                    <div class="energy-flow">
+                        <div class="system"><h4>Sistem</h4><p>Reaksi Kimia</p></div>
+                        <div class="arrow" id="energy-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="environment"><h4>Lingkungan</h4><p>Sekitar Sistem</p></div>
+                    </div>
+                    <p id="energy-description">Klik pada contoh di bawah untuk melihat aliran energi</p>
+                    <hr style="margin:1rem 0; border-color:rgba(255,255,255,0.08);">
+                    <h4>Termometer</h4>
+                    <div style="display:flex; gap:1rem; align-items:center; justify-content:center;">
+                        <div class="thermometer" id="thermometer">
+                            <div class="mercury" id="mercury"></div>
+                        </div>
+                        <div style="text-align:left;">
+                            <p>Temperatur: <span id="temp-value">20</span> °C</p>
+                            <button class="btn" onclick="resetExperiment()">Reset Simulasi</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="max-width:460px;">
+                    <h3>Contoh dalam Kehidupan Sehari-hari</h3>
+                    <div class="example-grid">
+                        <div class="example-card exo" onclick="showEnergyFlow('exo', this)">
+                            <i class="fas fa-fire fa-2x" style="color: #f72585; margin-bottom: 1rem;"></i>
+                            <h4>Pembakaran Kayu</h4>
+                            <p>Api unggun menghasilkan panas</p>
+                        </div>
+                        <div class="example-card exo" onclick="showEnergyFlow('exo', this)">
+                            <i class="fas fa-battery-full fa-2x" style="color: #f72585; margin-bottom: 1rem;"></i>
+                            <h4>Baterai</h4>
+                            <p>Mengeluarkan energi saat digunakan</p>
+                        </div>
+                        <div class="example-card endo" onclick="showEnergyFlow('endo', this)">
+                            <i class="fas fa-leaf fa-2x" style="color: #4cc9f0; margin-bottom: 1rem;"></i>
+                            <h4>Fotosintesis</h4>
+                            <p>Tumbuhan menyerap energi matahari</p>
+                        </div>
+                        <div class="example-card endo" onclick="showEnergyFlow('endo', this)">
+                            <i class="fas fa-ice-cream fa-2x" style="color: #4cc9f0; margin-bottom: 1rem;"></i>
+                            <h4>Peleburan Es</h4>
+                            <p>Es menyerap panas dari lingkungan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Contoh dalam Kehidupan Sehari-hari</h3>
+                <div class="example-grid">
+                    <div class="example-card exo" onclick="showEnergyFlow('exo', this)">
+                        <i class="fas fa-fire fa-2x" style="color: #f72585; margin-bottom: 1rem;"></i>
+                        <h4>Pembakaran Kayu</h4>
+                        <p>Api unggun menghasilkan panas</p>
+                    </div>
+                    <div class="example-card exo" onclick="showEnergyFlow('exo', this)">
+                        <i class="fas fa-battery-full fa-2x" style="color: #f72585; margin-bottom: 1rem;"></i>
+                        <h4>Baterai</h4>
+                        <p>Mengeluarkan energi saat digunakan</p>
+                    </div>
+                    <div class="example-card endo" onclick="showEnergyFlow('endo', this)">
+                        <i class="fas fa-leaf fa-2x" style="color: #4cc9f0; margin-bottom: 1rem;"></i>
+                        <h4>Fotosintesis</h4>
+                        <p>Tumbuhan menyerap energi matahari</p>
+                    </div>
+                    <div class="example-card endo" onclick="showEnergyFlow('endo', this)">
+                        <i class="fas fa-ice-cream fa-2x" style="color: #4cc9f0; margin-bottom: 1rem;"></i>
+                        <h4>Peleburan Es</h4>
+                        <p>Es menyerap panas dari lingkungan</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Pertanyaan Pemantik</h3>
+                <p><strong>Mengapa hand warmer mengeluarkan panas, sedangkan cold pack justru menyerap panas? Ke mana energi panas itu pergi atau datang?</strong></p>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn" onclick="showScene(3)">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Menu
+                </button>
+                <button class="btn btn-success" onclick="showScene(5)">
+                    <i class="fas fa-arrow-right"></i> Lanjut ke Perumusan Masalah
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scene 5: Perumusan Masalah -->
+    <div id="scene5" class="scene">
+        <div class="card">
+            <h2>Perumusan Masalah</h2>
+            <p>Berdasarkan pengamatan fenomena, rumuskan masalah yang akan kita selidiki:</p>
+            
+            <div class="card" style="background: rgba(67, 97, 238, 0.3); border-left: 5px solid var(--primary);">
+                <h3>MASALAH YANG AKAN KITA SELIDIKI:</h3>
+                <p>Bagaimana karakteristik reaksi kimia yang:</p>
+                <ul style="text-align: left; margin: 1rem 0;">
+                    <li><i class="fas fa-fire" style="color: #f72585;"></i> Melepas kalor (EKSOTERM) dan</li>
+                    <li><i class="fas fa-snowflake" style="color: #4cc9f0;"></i> Menyerap kalor (ENDOTERM)</li>
+                </ul>
+                <p>ditinjau dari:</p>
+                <ul style="text-align: left; margin: 1rem 0;">
+                    <li><i class="fas fa-thermometer-half"></i> Perubahan suhu</li>
+                    <li><i class="fas fa-bolt"></i> Aliran energi</li>
+                    <li><i class="fas fa-vials"></i> Produk dan reaktan</li>
+                </ul>
+                <p>Catat ide dan hipotesis Anda di lembar kerja.</p>
+                <hr style="border-color:rgba(255,255,255,0.08); margin-top:1rem;">
+                <label for="problem-input">Contoh rumusan masalah (editable):</label>
+                <input id="problem-input" placeholder="Misal: Bagaimana perubahan suhu ketika zat A dicampurkan dengan zat B?" />
+                <div style="margin-top:0.75rem; display:flex; gap:0.5rem; justify-content:center;">
+                    <button class="btn" onclick="document.getElementById('problem-input').value=''">Bersihkan</button>
+                    <button class="btn btn-success" onclick="saveProblem()">Simpan Rumusan Masalah</button>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn" onclick="showScene(3)">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Menu
+                </button>
+                <button class="btn btn-success" onclick="showScene(6)">
+                    <i class="fas fa-arrow-right"></i> Lanjut ke Penyusunan Hipotesis
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene 6: Penyusunan Hipotesis -->
+    <div id="scene6" class="scene">
+        <div class="card">
+            <h2>Penyusunan Hipotesis</h2>
+            <p>Susun hipotesis berdasarkan pengamatan dan perumusan masalah.</p>
+            <div class="card hypothesis-form">
+                <label for="hipotesis">Tuliskan hipotesis Anda:</label>
+                <textarea id="hipotesis" rows="4" placeholder="Contoh: Jika zat A dicampurkan dengan zat B, maka suhu akan meningkat."></textarea>
+                <div style="margin-top:1rem; display:flex; gap:0.5rem; justify-content:center;">
+                    <button class="btn" onclick="document.getElementById('hipotesis').value=''">Bersihkan</button>
+                    <button class="btn btn-success" onclick="saveHipotesis()">Simpan Hipotesis</button>
+                </div>
+            </div>
+            <div style="display:flex; gap:1rem; justify-content:center; margin-top:1rem;">
+                <button class="btn" onclick="showScene(5)">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <button class="btn btn-success" onclick="showScene(7)">
+                    <i class="fas fa-arrow-right"></i> Lanjut ke Pengumpulan Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene 7: Pengumpulan Data -->
+    <div id="scene7" class="scene">
+        <div class="card">
+            <h2>Pengumpulan Data (Eksperimen Virtual)</h2>
+            <p>Lakukan eksperimen sederhana untuk mengamati perubahan suhu dan aliran energi.</p>
+            <div class="simulation-container">
+                <div class="card">
+                    <h3>Eksperimen: Reaksi Endo/Eksoterm</h3>
+                    <p>Pilih bahan dan jalankan reaksi virtual:</p>
+                    <div style="display:flex; gap:0.5rem; justify-content:center; margin:1rem 0;">
+                        <select id="exp-select">
+                            <option value="">-- Pilih Reaksi --</option>
+                            <option value="exo">Pembakaran (Eksoterm)</option>
+                            <option value="endo">Pencampuran Cold Pack (Endoterm)</option>
+                        </select>
+                        <button class="btn btn-success" onclick="runExperiment()">Jalankan</button>
+                    </div>
+                    <p id="exp-result">Hasil eksperimen akan tampil di sini.</p>
+                </div>
+            </div>
+            <div style="display:flex; gap:1rem; justify-content:center; margin-top:1rem;">
+                <button class="btn" onclick="showScene(6)">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <button class="btn btn-success" onclick="showScene(8)">
+                    <i class="fas fa-arrow-right"></i> Lanjut ke Analisis Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene 8: Analisis Data -->
+    <div id="scene8" class="scene">
+        <div class="card">
+            <h2>Analisis Data</h2>
+            <p>Analisis hasil eksperimen dan buat grafik sederhana.</p>
+            <div class="card">
+                <h3>Ringkasan Hasil</h3>
+                <p id="analysis-summary">Belum ada data. Lakukan eksperimen terlebih dahulu.</p>
+            </div>
+            <div style="display:flex; gap:1rem; justify-content:center; margin-top:1rem;">
+                <button class="btn" onclick="showScene(7)">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <button class="btn btn-success" onclick="showScene(9)">
+                    <i class="fas fa-arrow-right"></i> Lanjut ke Penarikan Kesimpulan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene 9: Penarikan Kesimpulan -->
+    <div id="scene9" class="scene">
+        <div class="card">
+            <h2>Penarikan Kesimpulan</h2>
+            <p>Tarik kesimpulan berdasarkan hipotesis dan hasil analisis.</p>
+            <div class="conclusion-card card">
+                <h3>Kesimpulan Sementara</h3>
+                <p id="conclusion-text">Belum ada kesimpulan. Selesaikan analisis data terlebih dahulu.</p>
+            </div>
+            <div style="display:flex; gap:1rem; justify-content:center; margin-top:1rem;">
+                <button class="btn" onclick="showScene(8)">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <button class="btn btn-success" onclick="showScene(10)">
+                    <i class="fas fa-arrow-right"></i> Lanjut ke Kuis
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene 10: Kuis -->
+    <div id="scene10" class="scene">
+        <div class="card">
+            <h2>Kuis</h2>
+            <p>Uji pemahaman Anda tentang reaksi eksoterm dan endoterm.</p>
+            <div class="quiz-container">
+                <div class="quiz-card" onclick="answerQuiz(this, true)">
+                    <h4>Reaksi yang melepaskan panas disebut ...</h4>
+                    <p>A. Endoterm<br>B. Eksoterm</p>
+                </div>
+                <div class="quiz-card" onclick="answerQuiz(this, false)">
+                    <h4>Reaksi yang menyerap panas disebut ...</h4>
+                    <p>A. Eksoterm<br>B. Endoterm</p>
+                </div>
+            </div>
+            <div style="display:flex; gap:1rem; justify-content:center; margin-top:1rem;">
+                <button class="btn" onclick="showScene(9)">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <button class="btn btn-success" onclick="showScene(3)">
+                    <i class="fas fa-home"></i> Kembali ke Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimal JS to enable scene switching and interactions -->
+    <!-- Modal for feedback -->
+    <div id="modal" style="position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); background:rgba(0,0,0,0.8); color:white; padding:1.5rem 2rem; border-radius:12px; display:none; z-index:200; max-width:90%; text-align:center;">
+        <div id="modal-content"></div>
+        <div style="margin-top:1rem;"><button class="btn" onclick="hideModal()">Tutup</button></div>
+    </div>
+
+    <style>
+        /* Confetti pieces */
+        .confetti {
+            position:fixed; width:10px; height:14px; opacity:0.9; border-radius:2px; z-index:150;
+            animation: confetti-fall 2s linear forwards;
+        }
+        @keyframes confetti-fall { to { transform: translateY(120vh) rotate(360deg); opacity:0; } }
+    </style>
+
+    <script>
+        // Show scene by number (expects elements with id="sceneN")
+        function showScene(n) {
+            const scenes = document.querySelectorAll('.scene');
+            scenes.forEach(s => s.classList.remove('active'));
+            const target = document.getElementById('scene' + n);
+            if (target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                console.warn('Scene not found:', n);
+            }
+        }
+
+        // Toggle Senku chat bubble
+        function toggleSenkuChat() {
+            const chat = document.getElementById('senku-chat');
+            if (!chat) return;
+            if (chat.style.display === 'none' || getComputedStyle(chat).display === 'none') {
+                chat.style.display = 'block';
+            } else {
+                chat.style.display = 'none';
+            }
+        }
+
+        // Simple animations for examples
+        function aktifkanHandWarmer() {
+            const liq = document.getElementById('handwarmer-liquid');
+            if (!liq) return;
+            liq.style.height = '75%';
+            // update energy description briefly
+            const desc = document.getElementById('energy-description');
+            if (desc) desc.textContent = 'Energi dilepas dari sistem ke lingkungan (eksoterm).';
+        }
+
+        function aktifkanColdPack() {
+            const liq = document.getElementById('coldpack-liquid');
+            if (!liq) return;
+            liq.style.height = '75%';
+            const desc = document.getElementById('energy-description');
+            if (desc) desc.textContent = 'Energi diserap dari lingkungan ke sistem (endoterm).';
+        }
+
+        function showEnergyFlow(type, el) {
+            const arrow = document.getElementById('energy-arrow');
+            const desc = document.getElementById('energy-description');
+            // clear selected state from siblings
+            document.querySelectorAll('.example-card').forEach(c => c.classList.remove('selected'));
+            if (el && el.classList) el.classList.add('selected');
+            if (type === 'exo') {
+                if (arrow) arrow.innerHTML = '<i class="fas fa-arrow-right"></i>';
+                if (desc) desc.textContent = 'Energi mengalir dari sistem ke lingkungan (melepas panas).';
+            } else {
+                if (arrow) arrow.innerHTML = '<i class="fas fa-arrow-left"></i>';
+                if (desc) desc.textContent = 'Energi mengalir dari lingkungan ke sistem (menyerap panas).';
+            }
+        }
+
+        // Expose functions to global for inline onclick handlers (older browsers)
+        window.showScene = showScene;
+        window.toggleSenkuChat = toggleSenkuChat;
+        window.aktifkanHandWarmer = aktifkanHandWarmer;
+        window.aktifkanColdPack = aktifkanColdPack;
+        window.showEnergyFlow = showEnergyFlow;
+
+        // Data store for experiments (in-memory)
+        const experimentData = [];
+
+        // Run virtual experiment and store simple results
+        function runExperiment() {
+            const sel = document.getElementById('exp-select');
+            const result = document.getElementById('exp-result');
+            const analysis = document.getElementById('analysis-summary');
+            const conclusion = document.getElementById('conclusion-text');
+            const mercury = document.getElementById('mercury');
+            const tempValue = document.getElementById('temp-value');
+            if (!sel || !result) return;
+            const val = sel.value;
+            const timestamp = new Date().toLocaleTimeString();
+            if (val === 'exo') {
+                result.textContent = 'Suhu meningkat secara signifikan — reaksi eksoterm.';
+                if (analysis) analysis.textContent = 'Catatan: Suhu naik, energi dilepas ke lingkungan.';
+                if (conclusion) conclusion.textContent = 'Kesimpulan: Reaksi ini bersifat eksoterm.';
+                // animate mercury up and set temp
+                if (mercury) mercury.style.height = '85%';
+                if (tempValue) tempValue.textContent = '60';
+                addDataRow({ type: 'Eksoterm', temp: 60, time: timestamp });
+            } else if (val === 'endo') {
+                result.textContent = 'Suhu menurun — reaksi endoterm.';
+                if (analysis) analysis.textContent = 'Catatan: Suhu turun, energi diserap dari lingkungan.';
+                if (conclusion) conclusion.textContent = 'Kesimpulan: Reaksi ini bersifat endoterm.';
+                if (mercury) mercury.style.height = '25%';
+                if (tempValue) tempValue.textContent = '5';
+                addDataRow({ type: 'Endoterm', temp: 5, time: timestamp });
+            } else {
+                result.textContent = 'Pilih reaksi terlebih dahulu.';
+            }
+        }
+
+        // Save problem input
+        function saveProblem() {
+            const val = document.getElementById('problem-input').value || '[kosong]';
+            showModal('Rumusan Masalah Tersimpan', 'Rumusan masalah: <br><strong>' + escapeHtml(val) + '</strong>');
+        }
+
+        // Save hipotesis (connect to save button in scene 6)
+        function saveHipotesis() {
+            const val = document.getElementById('hipotesis').value || '[kosong]';
+            showModal('Hipotesis tersimpan', 'Hipotesis Anda: <br><strong>' + escapeHtml(val) + '</strong>');
+        }
+
+        // Add data row to internal table (and render table)
+        function addDataRow(row) {
+            experimentData.push(row);
+            renderDataTable();
+        }
+
+        function renderDataTable() {
+            let table = document.getElementById('data-table');
+            if (!table) {
+                const container = document.createElement('div');
+                container.className = 'card';
+                container.style.marginTop = '1rem';
+                container.innerHTML = '<h3>Data Eksperimen</h3><table class="observation-table" id="data-table"><thead><tr><th>Waktu</th><th>Jenis Reaksi</th><th>Suhu (°C)</th></tr></thead><tbody></tbody></table><div style="display:flex; gap:0.5rem; margin-top:0.75rem;"><button class="btn" onclick="exportCSV()">Ekspor CSV</button><button class="btn" onclick="experimentData.length=0; renderDataTable();">Hapus Data</button></div>';
+                const parent = document.querySelector('#scene7 .simulation-container');
+                if (parent) parent.appendChild(container);
+                table = document.getElementById('data-table');
+            }
+            const tbody = table.querySelector('tbody');
+            tbody.innerHTML = '';
+            experimentData.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${r.time}</td><td>${r.type}</td><td>${r.temp}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function exportCSV() {
+            if (!experimentData.length) return alert('Tidak ada data untuk diekspor.');
+            const rows = [['Waktu', 'Jenis Reaksi', 'Suhu (°C)']].concat(experimentData.map(r => [r.time, r.type, r.temp]));
+            const csv = rows.map(r => r.join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data_eksperimen.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function resetExperiment() {
+            const mercury = document.getElementById('mercury');
+            const tempValue = document.getElementById('temp-value');
+            if (mercury) mercury.style.height = '40%';
+            if (tempValue) tempValue.textContent = '20';
+            // clear liquids
+            const hw = document.getElementById('handwarmer-liquid');
+            const cp = document.getElementById('coldpack-liquid');
+            if (hw) hw.style.height = '0%';
+            if (cp) cp.style.height = '0%';
+        }
+
+        // Simple quiz answer handler
+        function answerQuiz(card, correct) {
+            if (!card || card.dataset.answered === '1') return;
+            card.dataset.answered = '1';
+            card.classList.add(correct ? 'selected' : 'wrong');
+            if (correct) {
+                showModal('Benar!', 'Jawaban Anda benar. Selamat!');
+                launchConfetti();
+            } else {
+                showModal('Salah', 'Jawaban kurang tepat. Coba lagi.');
+            }
+        }
+
+        // Modal helpers
+        function showModal(title, html) {
+            const m = document.getElementById('modal');
+            const content = document.getElementById('modal-content');
+            if (!m || !content) return;
+            content.innerHTML = '<h3 style="margin-bottom:0.5rem;">' + escapeHtml(title) + '</h3><div>' + html + '</div>';
+            m.style.display = 'block';
+        }
+        function hideModal() { document.getElementById('modal').style.display = 'none'; }
+
+        // Small confetti effect
+        function launchConfetti(count = 30) {
+            const colors = ['#f72585','#4cc9f0','#f1c40f','#2ecc71','#4361ee'];
+            for (let i = 0; i < count; i++) {
+                const d = document.createElement('div');
+                d.className = 'confetti';
+                d.style.left = Math.random() * 100 + '%';
+                d.style.background = colors[Math.floor(Math.random() * colors.length)];
+                d.style.top = '-10%';
+                d.style.transform = 'translateY(0) rotate(' + (Math.random()*360) + 'deg)';
+                d.style.opacity = 1;
+                d.style.animationDuration = (1.5 + Math.random()) + 's';
+                document.body.appendChild(d);
+                setTimeout(()=> d.remove(), 2200);
+            }
+        }
+
+        // Utility: escape HTML
+        function escapeHtml(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        window.runExperiment = runExperiment;
+        window.answerQuiz = answerQuiz;
+
+        // Simple particle background generation
+        (function generateParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            for (let i = 0; i < 40; i++) {
+                const p = document.createElement('div');
+                p.className = 'floating-particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = (Math.random() * 10) + 's';
+                container.appendChild(p);
+            }
+        })();
+    </script>
+</body>
+</html>
